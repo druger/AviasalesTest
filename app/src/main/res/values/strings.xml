@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AviaselsTest</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="find">Find</string>
+    <string name="empty_filed_error">Fill in the field</string>
+
+    <string name="map_key">AIzaSyAFeME7pBizD8rXwqsRN9C3klhqi64MqNU</string>
+</resources>
