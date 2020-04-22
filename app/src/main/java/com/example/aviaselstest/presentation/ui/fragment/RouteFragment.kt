@@ -63,9 +63,9 @@ class RouteFragment : Fragment(R.layout.fragment_route) {
         val toLocation = toCity?.location
 
         if (fromLocation != null && toLocation != null) {
-            val points = arrayOf(from, to)
             from = LatLng(fromLocation.lat, fromLocation.lon)
             to = LatLng(toLocation.lat, toLocation.lon)
+            val points = arrayOf(from, to)
             addRouteMarker(map, from, fromCity.countryCode)
             addRouteMarker(map, to, toCity.countryCode)
             addPolyline(map)

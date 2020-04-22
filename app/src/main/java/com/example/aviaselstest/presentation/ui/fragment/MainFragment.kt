@@ -2,11 +2,11 @@ package com.example.aviaselstest.presentation.ui.fragment
 
 import android.os.Bundle
 import android.text.Editable
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.example.aviaselstest.R
@@ -24,12 +24,18 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         super.onViewCreated(view, savedInstanceState)
         btnFind.setOnClickListener { openRouteInfo() }
         etFrom.addTextChangedListener {
-            fromField.error = null
-            getCities(it, Direction.FROM)
+            if (etFrom.hasFocus()) {
+                if (etFrom.isPerformingCompletion) return@addTextChangedListener
+                fromField.error = null
+                getCities(it, Direction.FROM)
+            }
         }
         etTo.addTextChangedListener {
-            toField.error = null
-            getCities(it, Direction.TO)
+            if (etTo.hasFocus()) {
+                if (etTo.isPerformingCompletion) return@addTextChangedListener
+                toField.error = null
+                getCities(it, Direction.TO)
+            }
         }
         observeCities()
     }
@@ -62,11 +68,14 @@ class MainFragment : Fragment(R.layout.main_fragment) {
                     Direction.TO -> viewModel.to = city
                 }
             }
+            if (!view.isPopupShowing) {
+                view.showDropDown()
+            }
         }
     }
 
     private fun openRouteInfo() {
-        if (!isEmptyFields()) {
+        if (isCorrectCities()) {
             val routeFragment = RouteFragment.newInstance()
             parentFragmentManager
                 .beginTransaction()
@@ -78,16 +87,20 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         }
     }
 
+    private fun isCorrectCities() = isCorrectFrom() && isCorrectTo()
+
+    private fun isCorrectTo() = viewModel.to != null && !isEmptyTo()
+
+    private fun isCorrectFrom() = viewModel.from != null && !isEmptyFrom()
+
     private fun setFieldsError() {
-        if (isEmptyFrom()) setError(fromField)
-        if (isEmptyTo()) setError(toField)
+        if (isEmptyFrom() || !isCorrectFrom()) setError(fromField)
+        if (isEmptyTo() || !isCorrectTo()) setError(toField)
     }
 
     private fun setError(input: TextInputLayout) {
-        input.error = getString(R.string.empty_filed_error)
+        input.error = getString(R.string.incorrect_city_error)
     }
-
-    private fun isEmptyFields() = isEmptyFrom() || isEmptyTo()
 
     private fun isEmptyTo() = etTo.text.toString().trim().isEmpty()
 

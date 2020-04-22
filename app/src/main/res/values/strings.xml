@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">AviaselsTest</string>
+    <string name="app_name">AviasalesTest</string>
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="find">Find</string>
-    <string name="empty_filed_error">Fill in the field</string>
+    <string name="incorrect_city_error">Choose city from the drop down list</string>
 
     <string name="map_key">AIzaSyAFeME7pBizD8rXwqsRN9C3klhqi64MqNU</string>
 </resources>
