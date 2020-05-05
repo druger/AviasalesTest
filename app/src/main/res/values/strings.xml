@@ -5,5 +5,5 @@
     <string name="find">Find</string>
     <string name="incorrect_city_error">Choose city from the drop down list</string>
 
-    <string name="map_key">AIzaSyAFeME7pBizD8rXwqsRN9C3klhqi64MqNU</string>
+    <string name="map_key">API_KEY</string>
 </resources>
